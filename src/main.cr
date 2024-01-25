@@ -9,7 +9,7 @@ device.mode = Spi::Mode::MODE_1
 device.bits_per_word = 8_u8
 device.baud = 800_000_u32 # 1.25 µs per bit
 
-panel = Panel.new(16, 16)
+panel = Panel.new(16, 32)
 x = 0
 y = 0
 

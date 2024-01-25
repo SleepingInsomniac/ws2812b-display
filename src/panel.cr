@@ -7,6 +7,9 @@ class Panel
     @pixels = Slice(UInt8).new(@width * @height * 3)
   end
 
+  def initialize(@width, @height, @pixels)
+  end
+
   def index(x, y)
     x = @width - 1 if x >= @width
 
