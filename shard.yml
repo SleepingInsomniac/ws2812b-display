@@ -1,0 +1,17 @@
+name: ws2812b-display
+version: 0.1.0
+
+authors:
+  - Alex Clink <alexclink@gmail.com>
+
+targets:
+  ws2812b-display:
+    main: src/main.cr
+
+crystal: '>= 1.11.2'
+
+license: MIT
+
+dependencies:
+  spi:
+    github: sleepinginsomniac/spi

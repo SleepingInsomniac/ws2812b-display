@@ -1,0 +1,6 @@
+version: 2.0
+shards:
+  spi:
+    git: https://github.com/sleepinginsomniac/spi.git
+    version: 0.1.0+git.commit.c0061bc2de7ff4a156023237382572911dbe55e3
+
