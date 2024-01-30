@@ -62,9 +62,6 @@ class LEDMatrix
   end
 
   def index(x, y)
-    x %= @width
-    y %= @height
-
     panel_x, x = x.divmod(@panel_width)
     panel_y, y = y.divmod(@panel_height)
 
@@ -75,6 +72,7 @@ class LEDMatrix
   end
 
   def []=(x, y, value : Tuple(UInt8, UInt8, UInt8))
+    return unless x < @width && y < @height
     offset = index(x, y) * @bytes_per_pixel
 
     value.each_with_index do |v, i|
