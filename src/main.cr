@@ -17,7 +17,7 @@ x = 0
 y = 0
 
 color = RGB(UInt8).new(0xffu8, 0u8, 0u8)
-font = BitFont.new("fonts/pixel")
+font = BitFont.new("fonts/pixel-small")
 
 n = 0
 
@@ -28,7 +28,7 @@ loop do
     end
   end
 
-  time = Time.local.to_s("%H:%M\n   %S\n%^a")
+  time = Time.local.to_s("%H:%M:%S\n%^A")
   font.draw_text(time, panel, 1, 1, RGB(UInt8).new(0xFF, 0, 0))
 
   device.send(panel.pixels, delay_usecs: 50) # Reset signal for new frame is min 50µs (50.0e-6)

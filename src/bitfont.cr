@@ -11,7 +11,7 @@ class BitFont
   getter height : UInt8
   getter chars = {} of Char => BitChar
 
-  def initialize(path : String, space = 2)
+  def initialize(path : String)
     state = :read_char
     char_def = uninitialized Char
     char_width = 0u8
@@ -24,6 +24,7 @@ class BitFont
       while line = file.gets("\n", true)
         case state
         when :read_char
+          next if line.blank?
           char_def = line.size > 1 ? line[1] : line[0]
           state = :get_data
         when :get_data
@@ -50,6 +51,7 @@ class BitFont
     end
   end
 
+  # TODO: Consider individual char widths
   def draw_text(msg : String, matrix, x : UInt32 = 0, y : UInt32 = 0, color : RGB(UInt8) = RGB(UInt8).new(0xFFu8, 0xFFu8, 0xFFu8))
     cur_y = 0
     cur_x = 0
@@ -57,6 +59,11 @@ class BitFont
     leading = 1
 
     msg.chars.each do |c|
+      if c == ' '
+        cur_x += 1
+        next
+      end
+
       if c == '\n'
         cur_y += 1
         cur_x = 0
