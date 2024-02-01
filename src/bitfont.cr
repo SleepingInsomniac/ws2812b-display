@@ -8,8 +8,11 @@ class BitFont
     end
   end
 
-  getter height : UInt8
   getter chars = {} of Char => BitChar
+
+  property line_height : UInt8 # line height
+  property leading : Int8 = 1  # space between lines
+  property tracking : Int8 = 1 # space between chars
 
   def initialize(path : String)
     state = :read_char
@@ -18,7 +21,7 @@ class BitFont
     char_height = 0u8
     char_bits = 0u64
     mask = 1u64 << 63
-    @height = 0u8
+    @line_height = 0u8
 
     File.open(path, "r") do |file|
       while line = file.gets("\n", true)
@@ -29,7 +32,7 @@ class BitFont
           state = :get_data
         when :get_data
           if line.blank?
-            @height = char_height if char_height > @height
+            @line_height = char_height if char_height > @line_height
             @chars[char_def] = BitChar.new(char_bits, char_width, char_height)
             char_width = 0u8
             char_height = 0u8
@@ -51,21 +54,13 @@ class BitFont
     end
   end
 
-  # TODO: Consider individual char widths
   def draw_text(msg : String, matrix, x : UInt32 = 0, y : UInt32 = 0, color : RGB(UInt8) = RGB(UInt8).new(0xFFu8, 0xFFu8, 0xFFu8))
     cur_y = 0
     cur_x = 0
-    tracking = 1
-    leading = 1
 
     msg.chars.each do |c|
-      if c == ' '
-        cur_x += 1
-        next
-      end
-
       if c == '\n'
-        cur_y += 1
+        cur_y += @line_height + @leading
         cur_x = 0
         next
       end
@@ -76,14 +71,20 @@ class BitFont
         0.upto(char.height - 1) do |cy|
           0.upto(char.width - 1) do |cx|
             if mask & char.bits > 0
-              matrix[x + cx + (cur_x * (char.width + tracking)), y + cy + (cur_y * (char.height + leading))] = color.to_tuple_grb
+              fx = (x + cur_x) + cx
+              fy = (y + cur_y) + cy
+
+              matrix[fx, fy] = color.to_tuple_grb
             end
+
             mask >>= 1
           end
         end
-      end
 
-      cur_x += 1
+        cur_x += char.width + @tracking
+      else
+        # ... print unknown char?
+      end
     end
   end
 end
