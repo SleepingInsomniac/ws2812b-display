@@ -68,7 +68,7 @@ class LEDMatrix
     offset = y * @panel_width
     offset += y.even? ? @panel_width - x - 1 : x
 
-    offset += (panel_y * panels_x + panel_x) * @pixels_per_panel
+    offset += (panel_y * @panels_x + panel_x) * @pixels_per_panel
   end
 
   def []=(x, y, value : Tuple(UInt8, UInt8, UInt8))
