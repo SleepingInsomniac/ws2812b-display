@@ -1,5 +1,5 @@
 require "colorize"
-require "./bitfont"
+require "pixelfont"
 require "./color"
 
 class TestMatrix
@@ -19,6 +19,10 @@ class TestMatrix
     value.each_with_index { |v, i| @data[offset + i] = v }
   end
 
+  def []=(x, y, color : RGB(UInt8))
+    self[x, y] = {color.r, color.g, color.b}
+  end
+
   def draw
     puts '╔' + ("══" * @width) + '╗'
     0.upto(@height - 1) do |y|
@@ -33,14 +37,19 @@ class TestMatrix
   end
 end
 
-font_small = BitFont.new("fonts/pixel-small")
-font_med = BitFont.new("fonts/pixel")
+font_small = Pixelfont::Font.new("lib/pixelfont/fonts/pixel-3x5")
+font_med = Pixelfont::Font.new("lib/pixelfont/fonts/pixel-5x7")
 panel = TestMatrix.new
 
 time = Time.local
-font_small.draw_text(<<-TEXT, panel, 1, 1, RGB(UInt8).new(0xFF, 0, 0))
+font_small.draw(<<-TEXT, 1, 1) do |x, y, on|
 #{time.to_s("%H:%M:%S")}
 TEXT
-font_med.draw_text(time.to_s("\n%a"), panel, 1, 1, RGB(UInt8).new(0xFF, 0xFF, 0))
+  panel[x, y] = RGB(UInt8).new(0xFF, 0, 0) if on
+end
+
+font_med.draw(time.to_s("%a"), 1, font_small.line_height.to_i32 + 2) do |x, y, on|
+  panel[x, y] = RGB(UInt8).new(0xFF, 0xFF, 0) if on
+end
 
 panel.draw
