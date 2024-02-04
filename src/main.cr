@@ -30,8 +30,9 @@ loop do
   end
 
   time = Time.local.to_s("%H:%M:%S\n%^A")
-  font.drow(time, 1, 1) do |x, y, on|
-    panel[x, y] = RGB(UInt8).new(0xFF) if on
+
+  font.draw(time, 1, 1) do |x, y, on|
+    panel.draw_point(x, y, RGB(UInt8).new(0xFF, 0, 0)) if on
   end
 
   device.send(panel.pixels, delay_usecs: 50) # Reset signal for new frame is min 50µs (50.0e-6)

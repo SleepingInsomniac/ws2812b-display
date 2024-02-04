@@ -1,8 +1,15 @@
 require "colorize"
 require "pixelfont"
 require "./color"
+require "./drawable"
 
+include CG2D
+
+# Requires a truecolor terminal (24bit) like iterm2
+#
 class TestMatrix
+  include Drawable
+
   def initialize
     @width = 32
     @height = 32
@@ -20,6 +27,10 @@ class TestMatrix
   end
 
   def []=(x, y, color : RGB(UInt8))
+    self[x, y] = {color.r, color.g, color.b}
+  end
+
+  def draw_point(x, y, color)
     self[x, y] = {color.r, color.g, color.b}
   end
 
@@ -49,7 +60,10 @@ TEXT
 end
 
 font_med.draw(time.to_s("%a"), 1, font_small.line_height.to_i32 + 2) do |x, y, on|
-  panel[x, y] = RGB(UInt8).new(0xFF, 0xFF, 0) if on
+  panel.draw_point(x, y, RGB(UInt8).new(0xFF, 0xFF, 0)) if on
 end
+
+panel.draw_point(17, 17, RGB(UInt8).new(0, 0, 0xFF))
+panel.draw_line(0, 5, 32, 10, RGB(UInt8).new(0, 0x88, 0xFF))
 
 panel.draw

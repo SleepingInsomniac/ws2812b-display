@@ -34,7 +34,13 @@ module Drawable
     end
   end
 
+  # :ditto:
   def draw_line(p1 : CG2D::Vec, p2 : CG2D::Vec, color)
     draw_line(p1.x, p1.y, p2.x, p2.y, color)
+  end
+
+  # :ditto:
+  def draw_line(line : CG2D::Line, color)
+    draw_line(line.p1.x, line.p1.y, line.p2.x, line.p2.y, color)
   end
 end

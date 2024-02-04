@@ -1,3 +1,5 @@
+require "./drawable"
+
 # Layout is in a reverse z pattern (they chose the worse way possible), 16x16 for each panel.
 #
 #    0 1 2 3 4 5 6 7 8 9 A B C D E F      0 1 2 3 4 5 6 7 8 9 A B C D E F
@@ -38,6 +40,8 @@
 # F ╚◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═══╝ ╚◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═╗
 #
 class LEDMatrix
+  include Drawable
+
   getter panel_width : UInt32 = 16
   getter panel_height : UInt32 = 16
   getter panels_x : UInt32 = 2
@@ -83,5 +87,12 @@ class LEDMatrix
   def [](x, y)
     offset = index(x, y) * @bytes_per_pixel
     @pixels[offset..(offset + 2)]
+  end
+
+  # Implements `Drawable`
+  #
+  def draw_point(x, y, color)
+    # LEDs are in GRB format
+    self[x, y] = {color.g, color.r, color.b}
   end
 end
