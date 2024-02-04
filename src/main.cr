@@ -17,17 +17,18 @@ panel = LEDMatrix.new
 x = 0
 y = 0
 
-color = RGB(UInt8).new(0xffu8, 0u8, 0u8)
+n = 0
 font = Pixelfont::Font.new("lib/pixelfont/fonts/pixel-3x5")
 
-n = 0
-
 loop do
-  0.upto(panel.height - 1) do |y|
-    0.upto(panel.width - 1) do |x|
-      panel[x, y] = {color.g // 15, color.r // 15, color.b // 15}
+  0.upto(31) do |y|
+    0.upto(31) do |x|
+      color = HSV.new((((x / 32) * 360) + n) % 360, 1.0, 1.0 - (y / 31))
+      panel.draw_point(x, y, RGB(UInt8).from_hsv(color))
     end
   end
+
+  n += 0.1
 
   time = Time.local.to_s("%H:%M:%S\n%^A")
 
@@ -36,6 +37,4 @@ loop do
   end
 
   device.send(panel.pixels, delay_usecs: 50) # Reset signal for new frame is min 50µs (50.0e-6)
-  color = color.rotate(1.0)
-  n += 1
 end

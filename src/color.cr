@@ -1,2 +1,2 @@
 require "./color/rgb"
-require "./color/hsl"
+require "./color/hsv"

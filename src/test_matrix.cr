@@ -52,18 +52,26 @@ font_small = Pixelfont::Font.new("lib/pixelfont/fonts/pixel-3x5")
 font_med = Pixelfont::Font.new("lib/pixelfont/fonts/pixel-5x7")
 panel = TestMatrix.new
 
-time = Time.local
-font_small.draw(<<-TEXT, 1, 1) do |x, y, on|
-#{time.to_s("%H:%M:%S")}
-TEXT
-  panel[x, y] = RGB(UInt8).new(0xFF, 0, 0) if on
+color = HSV.new(0.0, 1.0, 1.0)
+
+0.upto(31) do |y|
+  0.upto(31) do |x|
+    color = HSV.new((x / 32) * 360, 1.0, 1.0 - (y / 31))
+    panel.draw_point(x, y, RGB(UInt8).from_hsv(color))
+  end
 end
 
-font_med.draw(time.to_s("%a"), 1, font_small.line_height.to_i32 + 2) do |x, y, on|
-  panel.draw_point(x, y, RGB(UInt8).new(0xFF, 0xFF, 0)) if on
-end
-
-panel.draw_point(17, 17, RGB(UInt8).new(0, 0, 0xFF))
-panel.draw_line(0, 5, 32, 10, RGB(UInt8).new(0, 0x88, 0xFF))
+# time = Time.local
+# font_small.draw(<<-TEXT, 1, 1) do |x, y, on|
+# #{time.to_s("%H:%M:%S")}
+# TEXT
+#   panel[x, y] = RGB(UInt8).new(0xFF, 0, 0) if on
+# end
+#
+# # panel.draw_line(0, 5, 32, 10, RGB(UInt8).new(0, 0x88, 0xFF))
+#
+# font_med.draw(time.to_s("%a"), 1, font_small.line_height.to_i32 + 2) do |x, y, on|
+#   panel.draw_point(x, y, RGB(UInt8).new(0xFF, 0xFF, 0)) if on
+# end
 
 panel.draw
