@@ -82,6 +82,21 @@ module CG2D
       (self - other).magnitude
     end
 
+    # Return a new Vec(T) rotated by `theta` in radians
+    def rotated(theta)
+      cos_theta = Math.cos(theta)
+      sin_theta = Math.sin(theta)
+
+      Vec[
+        x * cos_theta - y * sin_theta,
+        x * sin_theta + y * cos_theta,
+      ]
+    end
+
+    def round(n = 0)
+      Vec[x.round(n), y.round(n)]
+    end
+
     {% for method, type in {
                              to_i: Int32, to_u: UInt32, to_f: Float64,
                              to_i8: Int8, to_i16: Int16, to_i32: Int32, to_i64: Int64, to_i128: Int128,

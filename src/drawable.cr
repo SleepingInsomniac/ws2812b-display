@@ -10,3 +10,4 @@ module Drawable
 end
 
 require "./drawable/draw_line"
+require "./drawable/draw_circle"
