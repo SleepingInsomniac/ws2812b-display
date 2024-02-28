@@ -1,5 +1,6 @@
 require "spi"
 require "pixelfont"
+require "png"
 
 require "./led_matrix"
 require "./color"
@@ -23,12 +24,7 @@ panel = LEDMatrix.new
 loop do
   time = Time.local
 
-  0.upto(31) do |y|
-    0.upto(31) do |x|
-      panel.draw_point(x, y, RGB(UInt8).new(0, 0, 0))
-    end
-  end
-
+  panel.pixels.fill(0u8)
   clock.draw_to(panel, time)
 
   font.draw(time.to_s("%H:%M:%S"), 1, 1) do |x, y, on|

@@ -1,12 +1,12 @@
 version: 2.0
 shards:
-  PNG:
-    git: https://github.com/sleepinginsomniac/png.git
-    version: 0.2.0+git.commit.5eb7821c1ed05e9044701c50a76c9ae42aa0f7b3
-
   pixelfont:
     git: https://github.com/sleepinginsomniac/pixelfont.git
     version: 0.1.0+git.commit.8f81b225ac7169e3038cb98633d3275845c9900d
+
+  png:
+    git: https://github.com/sleepinginsomniac/png.git
+    version: 0.2.1+git.commit.0e005338f3b33929a6817ed68ad34a181400440f
 
   spi:
     git: https://github.com/sleepinginsomniac/spi.git
