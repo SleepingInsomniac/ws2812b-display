@@ -1,4 +1,4 @@
-require "./drawable"
+require "./cg2d"
 
 # Layout is in a reverse z pattern (they chose the worse way possible), 16x16 for each panel.
 #
@@ -40,7 +40,7 @@ require "./drawable"
 # F ╚◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═══╝ ╚◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═◯═╗
 #
 class LEDMatrix
-  include Drawable
+  include CG2d::Drawable
 
   getter panel_width : UInt32 = 16
   getter panel_height : UInt32 = 16

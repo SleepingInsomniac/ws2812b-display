@@ -1,17 +1,17 @@
-module Drawable
+module CG2d::Drawable
   # Draw a line using Bresenham’s Algorithm
   def draw_line(x1 : Int, y1 : Int, x2 : Int, y2 : Int, color)
     # The slope for each axis
-    slope = CG2D::Vec[(x2 - x1).abs, -(y2 - y1).abs]
+    slope = CG2d::Vec[(x2 - x1).abs, -(y2 - y1).abs]
 
     # The step direction in both axis
-    step = CG2D::Vec[x1 < x2 ? 1 : -1, y1 < y2 ? 1 : -1]
+    step = CG2d::Vec[x1 < x2 ? 1 : -1, y1 < y2 ? 1 : -1]
 
     # The final decision accumulation
     # Initialized to the height of x and y
     decision = slope.x + slope.y
 
-    point = CG2D::Vec[x1, y1]
+    point = CG2d::Vec[x1, y1]
 
     loop do
       draw_point(point.x, point.y, color)
@@ -35,12 +35,12 @@ module Drawable
   end
 
   # :ditto:
-  def draw_line(p1 : CG2D::Vec, p2 : CG2D::Vec, color)
+  def draw_line(p1 : CG2d::Vec, p2 : CG2d::Vec, color)
     draw_line(p1.x, p1.y, p2.x, p2.y, color)
   end
 
   # :ditto:
-  def draw_line(line : CG2D::Line, color)
+  def draw_line(line : CG2d::Line, color)
     draw_line(line.p1.x, line.p1.y, line.p2.x, line.p2.y, color)
   end
 end

@@ -1,4 +1,4 @@
-module CG2D
+module CG2d
   struct Circle(T)
     property center : Vec(T)
     property radius : T

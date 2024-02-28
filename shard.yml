@@ -17,3 +17,5 @@ dependencies:
     github: sleepinginsomniac/spi
   pixelfont:
     github: sleepinginsomniac/pixelfont
+  PNG:
+    github: sleepinginsomniac/png

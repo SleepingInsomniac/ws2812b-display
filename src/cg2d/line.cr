@@ -1,4 +1,4 @@
-module CG2D
+module CG2d
   # T may be any subtype of Vec(T)
   # i.g. `Line(Int32)`
   #

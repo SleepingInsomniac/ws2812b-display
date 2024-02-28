@@ -4,3 +4,4 @@ end
 require "./cg2d/vec"
 require "./cg2d/line"
 require "./cg2d/matrix"
+require "./cg2d/drawable"

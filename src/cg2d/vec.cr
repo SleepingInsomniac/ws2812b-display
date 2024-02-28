@@ -1,7 +1,7 @@
-module CG2D
+module CG2d
   struct Vec(T)
     macro [](*args)
-      CG2D::Vec(typeof({{args.splat}})).new({{args.splat}})
+      CG2d::Vec(typeof({{args.splat}})).new({{args.splat}})
     end
 
     property x : T

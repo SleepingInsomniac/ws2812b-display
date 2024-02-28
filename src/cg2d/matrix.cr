@@ -1,4 +1,4 @@
-module CG2D
+module CG2d
   struct Matrix(T, S)
     include Indexable::Mutable(T)
 
@@ -14,11 +14,11 @@ module CG2D
     macro [](*args)
       # width and height are the isqrt of args.size
       {% if args.size == 4 %}
-        CG2D::Matrix(typeof({{*args}}), 4).new(2, 2, StaticArray[{{*args}}])
+        CG2d::Matrix(typeof({{*args}}), 4).new(2, 2, StaticArray[{{*args}}])
       {% elsif args.size == 9 %}
-        CG2D::Matrix(typeof({{*args}}), 9).new(3, 3, StaticArray[{{*args}}])
+        CG2d::Matrix(typeof({{*args}}), 9).new(3, 3, StaticArray[{{*args}}])
       {% elsif args.size == 16 %}
-        CG2D::Matrix(typeof({{*args}}), 16).new(4, 4, StaticArray[{{*args}}])
+        CG2d::Matrix(typeof({{*args}}), 16).new(4, 4, StaticArray[{{*args}}])
       {% else %}
         raise "Cannot determine width and height of matrix with {{ args.size }} elements, " \
               "please provide them explicitly Matrix(Int32, 16).new(4, 4, StaticArray[...])"
